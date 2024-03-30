@@ -1,0 +1,37 @@
+.history-container{
+    display: flex;
+    position: fixed;
+    flex-direction: row-reverse;
+    background: #44444444;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+.h-to-close-btn{
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+}
+.h-list-wrapper{
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    height: 100%;
+    background: #f3f4f6;
+    z-index: 15;
+}
+.h-l-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    background: #5d6481;
+    color: #fff;
+}
+.h-l-h-close-btn{
+    width: 15px;
+    height: 15px;
+}

@@ -1,0 +1,47 @@
+.tc-container{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    border: solid 1px #c5c5c5;
+    border-radius: 8px;
+}
+.tc-container:not(:last-child){
+    margin-bottom: 15px;
+}
+.tc-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.tc-description{
+    text-align: left;
+    margin: 10px 0;
+    line-height: 1.25;
+    font-size: 13px;
+}
+.tc-date{
+    text-align: left;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.tc-container{
+    color:#7f849a
+}
+.tc-container h3{
+    color: black;
+}
+.tc-input-status{
+    display: flex;
+    justify-content: space-between;
+    border-radius: 4px;
+    background: #e1e3e9;
+    padding: 10px;
+    margin-top: 10px;
+    align-items: center;
+}
+.tc-date-icon{
+    padding-right: 8px;
+    width: 15px;
+    height: 15px;
+}
