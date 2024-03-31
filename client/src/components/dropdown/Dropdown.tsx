@@ -3,8 +3,8 @@ import "./dropdown.css";
 
 export default function Dropdown(): JSX.Element {
     return (
-        <select className="dropdown-input" name="select">
-            <option value="" disabled selected>
+        <select className="dropdown-input" name="select" defaultValue={"value0"}>
+            <option value="value0" disabled>
                 Move to:
             </option>
             <option value="value1">list 1</option>
