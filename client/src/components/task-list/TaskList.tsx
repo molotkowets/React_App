@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import "./taskList.css";
 import { ReactComponent as Menu } from "../../assets/icons/menu.svg";
 import { ReactComponent as Add } from "../../assets/icons/add.svg";
-import TaskCard, { type TTasks } from "../task-card/TaskCard";
+import TaskCard from "../task-card/TaskCard";
 import EditMenuList from "../editMenu/EditMenuList";
+import { type IResponse } from "../../pages/taskBoard/data";
 
 export interface ITaskLists {
     name: string;
@@ -12,12 +13,12 @@ export interface ITaskLists {
 interface ITaskList {
     title: string;
     id: number;
-    tasks: TTasks[];
+    tasks: IResponse[];
     taskLists: ITaskLists[];
 }
 export default function TaskList({ title, id, tasks, taskLists }: ITaskList): JSX.Element {
     const [menuOpen, setMenuOpen] = useState(false);
-
+    const tasksNoId = tasks.find((v, i) => v.idStatus === id);
     return (
         <div className="task-list-container">
             <div className="tl-header">
@@ -42,8 +43,8 @@ export default function TaskList({ title, id, tasks, taskLists }: ITaskList): JS
                 </button>
             </div>
             <div className="tl-task-cads">
-                {tasks.map((i, key) => (
-                    <TaskCard key={key} task={i} taskLists={taskLists} />
+                {tasksNoId?.data.map((i, key) => (
+                    <TaskCard listId={id} key={key} task={i} taskLists={taskLists} />
                 ))}
             </div>
         </div>

@@ -6,20 +6,11 @@ import { ReactComponent as AddIcon } from "../../assets/icons/add-white.svg";
 import History from "../../components/history/History";
 import { getCategoriesByParams } from "../../queries/list.query";
 import Loading from "../../components/loading/Loading";
+import { tasksStatus } from "./data";
 
 export default function TaskBoardPage(): JSX.Element {
     const { isLoading, data: response } = getCategoriesByParams();
     const [historyModal, setHistoryModal] = useState(false);
-
-    const TDescription =
-        "Task description should be unambiguous, accurate, factual, comprehensible, correct and uniformly designed.";
-    const tasks = [...Array(3)].map((u, i) => ({
-        name: `Task-${i}`,
-        id: i,
-        description: TDescription,
-        date: "Wed, 19 Apr",
-        priority: "Low",
-    }));
 
     if (isLoading) {
         console.log("loading");
@@ -53,7 +44,7 @@ export default function TaskBoardPage(): JSX.Element {
                         title={i.name}
                         id={i.id}
                         key={key}
-                        tasks={tasks}
+                        tasks={tasksStatus(response?.data)}
                         taskLists={response?.data}
                     />
                 ))}

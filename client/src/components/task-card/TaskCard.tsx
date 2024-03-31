@@ -7,6 +7,7 @@ import { type ITaskLists } from "../task-list/TaskList";
 import EditMenuCard from "../editMenu/EditMenuCard";
 import Priority from "../priority/Priority";
 import Dropdown from "../dropdown/Dropdown";
+import { type ITask } from "../../pages/taskBoard/data";
 
 export interface TTasks {
     name: string;
@@ -17,13 +18,14 @@ export interface TTasks {
 }
 interface ITaskCard {
     key: number;
-    task: TTasks;
+    task: ITask;
+    listId: number;
     taskLists: ITaskLists[];
 }
-export default function TaskCard({ task, taskLists }: ITaskCard): JSX.Element {
+export default function TaskCard({ task, taskLists, listId }: ITaskCard): JSX.Element {
     const [menuOpen, setMenuOpen] = useState(false);
-
-    // console.log("taskLists", taskLists);
+    const listStatus = taskLists.filter((val) => val.id !== listId);
+    // console.log(listStatus);
     return (
         <div className="tc-container">
             <div className="tc-header">
@@ -54,7 +56,7 @@ export default function TaskCard({ task, taskLists }: ITaskCard): JSX.Element {
                     <option value="value3">list 3</option>
                 </select> */}
                 {/* <DropDownIcon /> */}
-                <Dropdown />
+                <Dropdown listStatus={listStatus} />
             </div>
         </div>
     );
