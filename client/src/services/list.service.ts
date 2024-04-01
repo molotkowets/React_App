@@ -15,5 +15,9 @@ class ListService {
         const ids = id != null ? id : "";
         return await axios.delete(`${this.URL}task-lists/${ids}`);
     }
+
+    async removeName<T, R>(params: T, id: number): Promise<AxiosResponse<R>> {
+        return await axios.patch(`${this.URL}task-lists/${id}`, params);
+    }
 }
 export default new ListService();

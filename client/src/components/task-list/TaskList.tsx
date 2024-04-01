@@ -5,6 +5,9 @@ import { ReactComponent as Add } from "../../assets/icons/add.svg";
 import TaskCard from "../task-card/TaskCard";
 import EditMenuList from "../editMenu/EditMenuList";
 import AddCard from "../addCard/AddCard";
+import { type SubmitHandler, useForm } from "react-hook-form";
+import { type IParams, removeNameList } from "../../queries/remove-name-list.query";
+import { useNavigate } from "react-router-dom";
 
 export interface ITasks {
     id: number;
@@ -24,20 +27,47 @@ interface ITaskList {
     id: number;
     taskLists: ITaskLists[];
 }
+// interface IInput {
+//     name: string;
+// }
 
 export default function TaskList({ title, id, taskLists }: ITaskList): JSX.Element {
+    const { register, handleSubmit } = useForm<IParams>();
+    const navigate = useNavigate();
     const [menuOpen, setMenuOpen] = useState(false);
     const [addCardModal, setAddCardModal] = useState(false);
+    const [editListName, setEditListName] = useState(false);
+    const [formStat, setFormState] = useState<IParams | null>(null);
 
+    const { status } = removeNameList(formStat, id);
+
+    if (status === "success") {
+        navigate(0);
+    }
     const tasksNoId = taskLists.find((v) => v.id === id);
-    // const testOp = [];
-    // testOp.push(taskLists);
+
+    const onSubmit: SubmitHandler<IParams> = (data) => {
+        setFormState(data);
+    };
 
     return (
         <div className="task-list-container">
             <div className="tl-header">
                 <div className="tl-header-title">
-                    <h2>{title}</h2>
+                    {editListName ? (
+                        <form onSubmit={handleSubmit(onSubmit)}>
+                            <input
+                                {...register("name", {
+                                    required: "Name is require field!",
+                                    value: title,
+                                })}
+                                type="text"
+                            />
+                        </form>
+                    ) : (
+                        <h2>{title}</h2>
+                    )}
+
                     <span>{tasksNoId?.tasks.length}</span>
                 </div>
                 <div className="tl-header-menu">
@@ -49,6 +79,7 @@ export default function TaskList({ title, id, taskLists }: ITaskList): JSX.Eleme
                     />
                     {menuOpen && (
                         <EditMenuList
+                            setEditListName={setEditListName}
                             id={id}
                             setAddCardModal={setAddCardModal}
                             toClose={setMenuOpen}

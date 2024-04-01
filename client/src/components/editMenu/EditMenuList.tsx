@@ -10,8 +10,14 @@ interface IEditMenu {
     toClose: React.Dispatch<React.SetStateAction<boolean>>;
     setAddCardModal: Dispatch<SetStateAction<boolean>>;
     id: number;
+    setEditListName: React.Dispatch<React.SetStateAction<boolean>>;
 }
-export default function EditMenuList({ id, toClose, setAddCardModal }: IEditMenu): JSX.Element {
+export default function EditMenuList({
+    id,
+    toClose,
+    setAddCardModal,
+    setEditListName,
+}: IEditMenu): JSX.Element {
     const [deleteId, setDeleteId] = useState<number | null>(null);
     const addClick = (): void => {
         toClose(false);
@@ -28,7 +34,14 @@ export default function EditMenuList({ id, toClose, setAddCardModal }: IEditMenu
         <div>
             <div className="em-container">
                 <button className="em-button">
-                    <Edit className="em-btn-icon" /> <span>Edit</span>
+                    <Edit
+                        onClick={() => {
+                            setEditListName(true);
+                            toClose(false);
+                        }}
+                        className="em-btn-icon"
+                    />{" "}
+                    <span>Edit</span>
                 </button>
                 <button onClick={addClick} className="em-button">
                     <Add className="em-btn-icon" />
