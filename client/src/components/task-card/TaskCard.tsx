@@ -52,7 +52,14 @@ export default function TaskCard({ data, listId, taskLists }: ITaskCard): JSX.El
                     }}
                     className="tl-header-menu-icon"
                 />
-                {menuOpen && <EditMenuCard id={data.id} toClose={setMenuOpen} />}
+                {menuOpen && (
+                    <EditMenuCard
+                        taskLists={taskLists}
+                        cardData={data}
+                        id={data.id}
+                        toClose={setMenuOpen}
+                    />
+                )}
             </div>
             <div className="tc-input-status">
                 <Dropdown listStatus={taskLists} listId={listId} id={data.id} />
