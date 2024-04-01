@@ -19,6 +19,7 @@
     margin: 10px 0;
     line-height: 1.25;
     font-size: 13px;
+    overflow-wrap: break-word;
 }
 .tc-date{
     text-align: left;

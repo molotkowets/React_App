@@ -4,39 +4,41 @@ import { ReactComponent as Menu } from "../../assets/icons/menu.svg";
 import { ReactComponent as Add } from "../../assets/icons/add.svg";
 import TaskCard from "../task-card/TaskCard";
 import EditMenuList from "../editMenu/EditMenuList";
-import { type IResponse } from "../../pages/taskBoard/data";
 import AddCard from "../addCard/AddCard";
-// import { type IToClose } from "../../types/hook.types";
 
+export interface ITasks {
+    id: number;
+    name: string;
+    description: string;
+    dueDate: string;
+    priority: string;
+    taskListId: number;
+}
 export interface ITaskLists {
     name: string;
     id: number;
+    tasks: ITasks[];
 }
 interface ITaskList {
     title: string;
     id: number;
-    tasks: IResponse[];
     taskLists: ITaskLists[];
-    // toCloseAddBtn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function TaskList({
-    title,
-    id,
-    tasks,
-    taskLists,
-    // toCloseAddBtn,
-}: ITaskList): JSX.Element {
+export default function TaskList({ title, id, taskLists }: ITaskList): JSX.Element {
     const [menuOpen, setMenuOpen] = useState(false);
     const [addCardModal, setAddCardModal] = useState(false);
 
-    const tasksNoId = tasks.find((v, i) => v.idStatus === id);
+    const tasksNoId = taskLists.find((v) => v.id === id);
+    // const testOp = [];
+    // testOp.push(taskLists);
+
     return (
         <div className="task-list-container">
             <div className="tl-header">
                 <div className="tl-header-title">
                     <h2>{title}</h2>
-                    <span>{id}</span>
+                    <span>{tasksNoId?.tasks.length}</span>
                 </div>
                 <div className="tl-header-menu">
                     <Menu
@@ -48,7 +50,9 @@ export default function TaskList({
                     {menuOpen && <EditMenuList toClose={setMenuOpen} />}
                 </div>
             </div>
-            {addCardModal && <AddCard toClose={setAddCardModal} />}
+            {addCardModal && (
+                <AddCard toClose={setAddCardModal} listStatus={taskLists} listId={id} />
+            )}
             <div className="tl-button-container">
                 <button
                     onClick={() => {
@@ -60,8 +64,8 @@ export default function TaskList({
                 </button>
             </div>
             <div className="tl-task-cads">
-                {tasksNoId?.data.map((i, key) => (
-                    <TaskCard listId={id} key={key} task={i} taskLists={taskLists} />
+                {tasksNoId?.tasks.map((i, key) => (
+                    <TaskCard taskLists={taskLists} listId={id} key={key} data={i} />
                 ))}
             </div>
         </div>

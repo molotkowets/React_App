@@ -10,7 +10,7 @@
 .tb-column-container{
     display: flex;
     overflow-x: auto;
-    overflow-y: hidden;
+    /* overflow-y: hidden; */
     scrollbar-color: #c5c5c5 #ffffff00;
     scrollbar-width: auto;
     width: 100%;
@@ -51,4 +51,9 @@
     width: 15px;
     height: 15px;
     padding-right: 6px;
+}
+.tb-header-btn-send{
+    border: none;
+    outline: none;
+    background: none;
 }

@@ -5,6 +5,8 @@ import { type UseFormRegister } from "react-hook-form";
 
 interface IInput {
     register: UseFormRegister<ICardForm>;
+    name: string;
+    type: string;
 }
 export default function Input({ register }: IInput): JSX.Element {
     return (
