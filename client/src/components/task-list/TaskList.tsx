@@ -2,28 +2,43 @@ import React, { useState } from "react";
 import "./taskList.css";
 import { ReactComponent as Menu } from "../../assets/icons/menu.svg";
 import { ReactComponent as Add } from "../../assets/icons/add.svg";
-import TaskCard, { type TTasks } from "../task-card/TaskCard";
+import TaskCard from "../task-card/TaskCard";
 import EditMenuList from "../editMenu/EditMenuList";
+import AddCard from "../addCard/AddCard";
 
+export interface ITasks {
+    id: number;
+    name: string;
+    description: string;
+    dueDate: string;
+    priority: string;
+    taskListId: number;
+}
 export interface ITaskLists {
     name: string;
     id: number;
+    tasks: ITasks[];
 }
 interface ITaskList {
     title: string;
     id: number;
-    tasks: TTasks[];
     taskLists: ITaskLists[];
 }
-export default function TaskList({ title, id, tasks, taskLists }: ITaskList): JSX.Element {
+
+export default function TaskList({ title, id, taskLists }: ITaskList): JSX.Element {
     const [menuOpen, setMenuOpen] = useState(false);
+    const [addCardModal, setAddCardModal] = useState(false);
+
+    const tasksNoId = taskLists.find((v) => v.id === id);
+    // const testOp = [];
+    // testOp.push(taskLists);
 
     return (
         <div className="task-list-container">
             <div className="tl-header">
                 <div className="tl-header-title">
                     <h2>{title}</h2>
-                    <span>{id}</span>
+                    <span>{tasksNoId?.tasks.length}</span>
                 </div>
                 <div className="tl-header-menu">
                     <Menu
@@ -35,15 +50,22 @@ export default function TaskList({ title, id, tasks, taskLists }: ITaskList): JS
                     {menuOpen && <EditMenuList toClose={setMenuOpen} />}
                 </div>
             </div>
+            {addCardModal && (
+                <AddCard toClose={setAddCardModal} listStatus={taskLists} listId={id} />
+            )}
             <div className="tl-button-container">
-                <button className="tl-button-add">
+                <button
+                    onClick={() => {
+                        setAddCardModal(true);
+                    }}
+                    className="tl-button-add">
                     <Add className="tl-button-add-icon" />
                     <span>Add new card</span>
                 </button>
             </div>
             <div className="tl-task-cads">
-                {tasks.map((i, key) => (
-                    <TaskCard key={key} task={i} taskLists={taskLists} />
+                {tasksNoId?.tasks.map((i, key) => (
+                    <TaskCard taskLists={taskLists} listId={id} key={key} data={i} />
                 ))}
             </div>
         </div>

@@ -43,6 +43,21 @@ $ npm run start:dev
 
 # production mode
 $ npm run start:prod
+
+# run migrations
+$ npm run migration:run
+```
+
+- configure .env file
+
+```
+DATABASE_USER=task_board_user
+DATABASE_PASSWORD=1234567890
+DATABASE_NAME=task_board
+DATABASE_PORT=5432
+DATABASE_HOST=localhost
+PORT=3000
+NODE_ENV=dev
 ```
 
 ## Test

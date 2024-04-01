@@ -1,15 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import "./dropdown.css";
+import { type ITaskLists } from "../task-list/TaskList";
+import { taskMoveTo } from "../../queries/patch-task-move-to.query";
+import { useNavigate } from "react-router-dom";
 
-export default function Dropdown(): JSX.Element {
+interface IDropDown {
+    listStatus: ITaskLists[];
+    listId: number;
+    id: number;
+}
+export default function Dropdown({ listStatus, listId, id }: IDropDown): JSX.Element {
+    const [selectVal, setSelectVal] = useState<number | null>(null);
+    const { status } = taskMoveTo({ taskListId: selectVal }, id);
+    const navigate = useNavigate();
+
+    if (status === "success") {
+        navigate(0);
+    }
+
+    console.log("id: ", id, "status: ", status, "selectVal: ", selectVal);
     return (
-        <select className="dropdown-input" name="select">
-            <option value="" disabled selected>
+        <select
+            onChange={(e) => {
+                setSelectVal(Number(e.target.value));
+            }}
+            className="dropdown-input"
+            name="select"
+            defaultValue={"value0"}>
+            <option value="value0" disabled>
                 Move to:
             </option>
-            <option value="value1">list 1</option>
-            <option value="value2">list 2</option>
-            <option value="value3">list 3</option>
+            {listStatus.map((v, key) => (
+                <option key={key} value={v.id}>
+                    {v.name}
+                </option>
+            ))}
         </select>
     );
 }
