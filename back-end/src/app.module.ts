@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TaskManagementModule } from './task-management/task-management.module';
 import { join, relative } from 'path';
+import { LoggerModule, Params } from 'nestjs-pino';
 
 @Module({
   imports: [
@@ -31,6 +32,22 @@ import { join, relative } from 'path';
       isGlobal: true,
     }),
     TaskManagementModule,
+    LoggerModule.forRootAsync({
+      useFactory: (): Params => ({
+        pinoHttp: [
+          {
+            level: 'info',
+            transport: {
+              target: 'pino-pretty',
+              options: {
+                colorize: true,
+              },
+            },
+          },
+          process.stdout,
+        ],
+      }),
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
