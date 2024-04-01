@@ -55,7 +55,7 @@ export default function TaskList({ title, id, taskLists }: ITaskList): JSX.Eleme
             <div className="tl-header">
                 <div className="tl-header-title">
                     {editListName ? (
-                        <form onSubmit={handleSubmit(onSubmit)}>
+                        <form className="tl-form-edit-list" onSubmit={handleSubmit(onSubmit)}>
                             <input
                                 {...register("name", {
                                     required: "Name is require field!",
@@ -63,6 +63,7 @@ export default function TaskList({ title, id, taskLists }: ITaskList): JSX.Eleme
                                 })}
                                 type="text"
                             />
+                            <button>Edit</button>
                         </form>
                     ) : (
                         <h2>{title}</h2>
