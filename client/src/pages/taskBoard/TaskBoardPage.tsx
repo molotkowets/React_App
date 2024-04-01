@@ -7,6 +7,8 @@ import History from "../../components/history/History";
 import { getCategoriesByParams } from "../../queries/list.query";
 import Loading from "../../components/loading/Loading";
 import { tasksStatus } from "./data";
+// import AddCard from "../../components/addCard/AddCard";
+// import CardBoard from "../../components/cardBoard/CardBoard";
 
 export default function TaskBoardPage(): JSX.Element {
     const { isLoading, data: response } = getCategoriesByParams();
@@ -46,6 +48,7 @@ export default function TaskBoardPage(): JSX.Element {
                         key={key}
                         tasks={tasksStatus(response?.data)}
                         taskLists={response?.data}
+                        // toCloseAddBtn={setCardBoardModal}
                     />
                 ))}
             </div>

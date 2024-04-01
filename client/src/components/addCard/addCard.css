@@ -1,0 +1,14 @@
+.add-card-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.add-card-container{
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+.add-modal-header{
+    box-sizing: border-box;
+    width: 100%;
+}

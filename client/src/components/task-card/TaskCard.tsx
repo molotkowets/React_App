@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import "./taskCard.css";
 import { ReactComponent as MenuIcon } from "../../assets/icons/menu.svg";
-// import { ReactComponent as DropDownIcon } from "../../assets/icons/drop-down.svg";
 import { ReactComponent as DateIcon } from "../../assets/icons/date.svg";
 import { type ITaskLists } from "../task-list/TaskList";
 import EditMenuCard from "../editMenu/EditMenuCard";
 import Priority from "../priority/Priority";
 import Dropdown from "../dropdown/Dropdown";
 import { type ITask } from "../../pages/taskBoard/data";
+import CardBoard from "../cardBoard/CardBoard";
 
 export interface TTasks {
     name: string;
@@ -23,39 +23,38 @@ interface ITaskCard {
     taskLists: ITaskLists[];
 }
 export default function TaskCard({ task, taskLists, listId }: ITaskCard): JSX.Element {
+    const [cardBoardModal, setCardBoardModal] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
     const listStatus = taskLists.filter((val) => val.id !== listId);
-    // console.log(listStatus);
+
     return (
         <div className="tc-container">
-            <div className="tc-header">
-                <h3>{task.name}</h3>
-                <div className="tl-header-menu">
-                    <MenuIcon
-                        onClick={() => {
-                            setMenuOpen(!menuOpen);
-                        }}
-                        className="tl-header-menu-icon"
-                    />
-                    {menuOpen && <EditMenuCard toClose={setMenuOpen} />}
+            {cardBoardModal && <CardBoard toClose={setCardBoardModal} />}
+            <div
+                onClick={() => {
+                    setCardBoardModal(true);
+                }}
+                className="tc-btn-close-wrapper">
+                <div className="tc-header">
+                    <h3>{task.name}</h3>
                 </div>
+                <p className="tc-description">{task.description}</p>
+                <span className="tc-date">
+                    <DateIcon className="tc-date-icon" />
+                    {task.date}
+                </span>
+                <Priority priority={task.priority} />
             </div>
-            <p className="tc-description">{task.description}</p>
-            <span className="tc-date">
-                <DateIcon className="tc-date-icon" />
-                {task.date}
-            </span>
-            <Priority priority={task.priority} />
+            <div className="tk-menu-icon tl-header-menu">
+                <MenuIcon
+                    onClick={() => {
+                        setMenuOpen(!menuOpen);
+                    }}
+                    className="tl-header-menu-icon"
+                />
+                {menuOpen && <EditMenuCard toClose={setMenuOpen} />}
+            </div>
             <div className="tc-input-status">
-                {/* <select name="select">
-                    <option value="" disabled selected>
-                        Move to:
-                    </option>
-                    <option value="value1">list 1</option>
-                    <option value="value2">list 2</option>
-                    <option value="value3">list 3</option>
-                </select> */}
-                {/* <DropDownIcon /> */}
                 <Dropdown listStatus={listStatus} />
             </div>
         </div>

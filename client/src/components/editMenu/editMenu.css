@@ -9,7 +9,7 @@
     left: 0;
     top: 30px;
     background: #fff;
-    z-index: 1;
+    z-index: 6;
 }
 .em-background-button-close{
     display: flex;

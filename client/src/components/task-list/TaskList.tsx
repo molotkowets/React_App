@@ -5,6 +5,8 @@ import { ReactComponent as Add } from "../../assets/icons/add.svg";
 import TaskCard from "../task-card/TaskCard";
 import EditMenuList from "../editMenu/EditMenuList";
 import { type IResponse } from "../../pages/taskBoard/data";
+import AddCard from "../addCard/AddCard";
+// import { type IToClose } from "../../types/hook.types";
 
 export interface ITaskLists {
     name: string;
@@ -15,9 +17,19 @@ interface ITaskList {
     id: number;
     tasks: IResponse[];
     taskLists: ITaskLists[];
+    // toCloseAddBtn: React.Dispatch<React.SetStateAction<boolean>>;
 }
-export default function TaskList({ title, id, tasks, taskLists }: ITaskList): JSX.Element {
+
+export default function TaskList({
+    title,
+    id,
+    tasks,
+    taskLists,
+    // toCloseAddBtn,
+}: ITaskList): JSX.Element {
     const [menuOpen, setMenuOpen] = useState(false);
+    const [addCardModal, setAddCardModal] = useState(false);
+
     const tasksNoId = tasks.find((v, i) => v.idStatus === id);
     return (
         <div className="task-list-container">
@@ -36,8 +48,13 @@ export default function TaskList({ title, id, tasks, taskLists }: ITaskList): JS
                     {menuOpen && <EditMenuList toClose={setMenuOpen} />}
                 </div>
             </div>
+            {addCardModal && <AddCard toClose={setAddCardModal} />}
             <div className="tl-button-container">
-                <button className="tl-button-add">
+                <button
+                    onClick={() => {
+                        setAddCardModal(true);
+                    }}
+                    className="tl-button-add">
                     <Add className="tl-button-add-icon" />
                     <span>Add new card</span>
                 </button>
