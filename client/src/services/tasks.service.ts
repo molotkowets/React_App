@@ -17,5 +17,9 @@ class TasksService {
     async moveTo<T, R>(params: T, id: number): Promise<AxiosResponse<R>> {
         return await axios.patch(`${this.URL}tasks/${id}`, params);
     }
+
+    async edit<T, R>(params: T, id: number): Promise<AxiosResponse<R>> {
+        return await axios.patch(`${this.URL}tasks/${id}`, params);
+    }
 }
 export default new TasksService();
