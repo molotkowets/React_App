@@ -6,6 +6,7 @@ import { type ITaskLists, type ITasks } from "../task-list/TaskList";
 import InputError from "../inputError/InputError";
 import { useNavigate } from "react-router-dom";
 import { editTask } from "../../queries/edit-task-card.query";
+import { formatDateToForm } from "../../other/formatDate";
 export interface ICardForm {
     name: string;
     description: string;
@@ -85,7 +86,7 @@ export default function EditCard({ toClose, cardData, taskLists }: IAddCard): JS
                                 <input
                                     {...register("dueDate", {
                                         required: true,
-                                        value: cardData.dueDate,
+                                        value: formatDateToForm(cardData.dueDate),
                                     })}
                                     type="datetime-local"
                                 />
