@@ -48,7 +48,11 @@ export default function TaskList({ title, id, taskLists }: ITaskList): JSX.Eleme
                         className="tl-header-menu-icon"
                     />
                     {menuOpen && (
-                        <EditMenuList setAddCardModal={setAddCardModal} toClose={setMenuOpen} />
+                        <EditMenuList
+                            id={id}
+                            setAddCardModal={setAddCardModal}
+                            toClose={setMenuOpen}
+                        />
                     )}
                 </div>
             </div>

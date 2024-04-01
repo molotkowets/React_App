@@ -1,18 +1,29 @@
-import React, { type Dispatch, type SetStateAction } from "react";
+import React, { useState, type Dispatch, type SetStateAction } from "react";
 import "./editMenu.css";
 import { ReactComponent as Add } from "../../assets/icons/add.svg";
 import { ReactComponent as Edit } from "../../assets/icons/edit.svg";
 import { ReactComponent as TrashCan } from "../../assets/icons/trash-can.svg";
+import { useNavigate } from "react-router-dom";
+import { deleteTaskList } from "../../queries/delete-task-list.query";
 
 interface IEditMenu {
     toClose: React.Dispatch<React.SetStateAction<boolean>>;
     setAddCardModal: Dispatch<SetStateAction<boolean>>;
+    id: number;
 }
-export default function EditMenuList({ toClose, setAddCardModal }: IEditMenu): JSX.Element {
+export default function EditMenuList({ id, toClose, setAddCardModal }: IEditMenu): JSX.Element {
+    const [deleteId, setDeleteId] = useState<number | null>(null);
     const addClick = (): void => {
         toClose(false);
         setAddCardModal(true);
     };
+    const navigate = useNavigate();
+    const { status } = deleteTaskList(deleteId);
+
+    if (status === "success") {
+        navigate(0);
+    }
+
     return (
         <div>
             <div className="em-container">
@@ -23,7 +34,11 @@ export default function EditMenuList({ toClose, setAddCardModal }: IEditMenu): J
                     <Add className="em-btn-icon" />
                     <span>Add new card</span>
                 </button>
-                <button className="em-button">
+                <button
+                    onClick={() => {
+                        setDeleteId(id);
+                    }}
+                    className="em-button">
                     <TrashCan className="em-btn-icon" /> <span>Delete</span>
                 </button>
             </div>
