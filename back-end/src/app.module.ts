@@ -6,6 +6,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TaskManagementModule } from './task-management/task-management.module';
 import { join, relative } from 'path';
 import { LoggerModule, Params } from 'nestjs-pino';
+import * as Joi from 'joi';
 
 @Module({
   imports: [
@@ -29,6 +30,15 @@ import { LoggerModule, Params } from 'nestjs-pino';
       inject: [ConfigService],
     }),
     ConfigModule.forRoot({
+      validationSchema: Joi.object({
+        DATABASE_USER: Joi.string().required(),
+        DATABASE_PASSWORD: Joi.string().required(),
+        DATABASE_NAME: Joi.string().required(),
+        DATABASE_PORT: Joi.number().port().required(),
+        DATABASE_HOST: Joi.string().required(),
+        PORT: Joi.number().port().default(3000),
+        NODE_ENV: Joi.string().valid('dev', 'prod').default('dev'),
+      }),
       isGlobal: true,
     }),
     TaskManagementModule,
